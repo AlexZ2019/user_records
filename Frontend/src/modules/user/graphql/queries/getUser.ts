@@ -1,10 +1,18 @@
 import gql from 'graphql-tag';
 
-export const USER_QUERY = gql`
-  query getCurrentUser {
-    getCurrentUser {
-      id
-      email
-    }
+export const USERS_QUERY = gql`
+  query getUsers($page: Float, $pageSize: Float) {
+      getUsers(page: $page, pageSize: $pageSize) {
+          total
+          pages
+          users {
+              id
+              name
+              address
+              status
+              role
+              amount
+          }
+      }
   }
 `;
