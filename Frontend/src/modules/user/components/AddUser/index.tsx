@@ -7,6 +7,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER_MUTATION } from "../../graphql/mutations/createUser";
+import { USERS_QUERY } from "../../graphql/queries/getUser";
 
 const schema = yup.object().shape({
   name: yup.string().min(3).required(),
@@ -15,7 +16,7 @@ const schema = yup.object().shape({
   address: yup.string().min(3).required(),
   amount: yup.string().min(3).required(),
 });
-const AddUser = () => {
+const AddUser = ({ refetch }: { refetch: () => void }) => {
   const modal = useModal();
 
   const {
@@ -39,6 +40,7 @@ const AddUser = () => {
     onCompleted: () => {
       reset();
       modal.hideModal();
+      refetch();
     },
   });
   const showModal = () => {

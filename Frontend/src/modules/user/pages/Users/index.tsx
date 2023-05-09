@@ -48,7 +48,7 @@ const Users = () => {
     <div>
       <div>
         <Title level={3}>Users</Title>
-        <AddUser/>
+        <AddUser refetch={refetch}/>
       </div>
       <Table columns={columns} rowKey={user => user.id} dataSource={data?.getUsers?.users} loading={loading} pagination={false} />
       <DefaultPagination getNewPage={refetch} total={data?.getUsers?.total}/>
