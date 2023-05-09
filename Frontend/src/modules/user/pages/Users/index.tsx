@@ -1,13 +1,13 @@
 import { useQuery } from "@apollo/client";
 import { USERS_QUERY } from "../../graphql/queries/getUser";
-import { Button, InputRef, Table, Tooltip } from "antd";
+import { InputRef, Table } from "antd";
 import { useRef, useState } from "react";
-import { PlusOutlined } from "@ant-design/icons";
 import { FilterConfirmProps } from "antd/es/table/interface";
 import Title from "antd/es/typography/Title";
 import { getColumnSearchProps } from "../../../common/utils/getColumnSearchProps";
 import { IData } from "../../types";
 import { userAddress, userAmount, userName, userRole, userStatus } from "../../components/UserColumns";
+import AddUser from "../../components/AddUser";
 
 type DataIndex = keyof IData;
 const Users = () => {
@@ -53,11 +53,7 @@ const Users = () => {
     <div>
       <div>
         <Title level={3}>Users</Title>
-        <Tooltip placement="topLeft" title="Add user">
-          <Button type="ghost">
-            <PlusOutlined />
-          </Button>
-        </Tooltip>
+        <AddUser/>
       </div>
       <Table columns={columns} dataSource={data?.getUsers?.users} loading={loading} pagination={tableParams.pagination} />
     </div>

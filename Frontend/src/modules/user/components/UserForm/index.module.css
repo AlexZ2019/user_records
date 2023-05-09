@@ -1,0 +1,32 @@
+.form {
+  width: 300px;
+  margin: auto;
+  padding: 25px;
+  background: #ffc34d;
+  border-radius: 10px;
+}
+.form button {
+  background-color: coral;
+  border: none;
+}
+.form button:hover {
+  background-color: coral;
+}
+.form button:focus {
+  background-color: coral;
+}
+
+.input {
+  margin: 15px 0;
+}
+
+.formButton {
+  color: coral;
+}
+
+.errorMessage {
+  height: 15px;
+  color: darkred;
+}
+
+/*# sourceMappingURL=index.module.css.map */

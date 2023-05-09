@@ -18,7 +18,7 @@ class UserModel {
   status: string;
 
   @Field()
-  amount: number;
+  amount: string;
 }
 
 export default UserModel;

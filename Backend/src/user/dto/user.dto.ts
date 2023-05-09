@@ -16,5 +16,5 @@ export default class UserArgs {
   status: string;
 
   @Field()
-  amount: number;
+  amount: string;
 }

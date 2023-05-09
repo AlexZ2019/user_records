@@ -13,7 +13,7 @@ export default class Record extends BaseEntity {
   role: string;
 
   @Column()
-  amount: number;
+  amount: string;
 
   @Column()
   status: string;
