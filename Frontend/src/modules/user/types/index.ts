@@ -1,8 +1,11 @@
-export interface IData {
-  id: string;
+
+export interface IUser {
   name: string;
   address: string;
-  amount: number;
+  amount: string;
   role: string;
   status: string;
+}
+export interface IData extends IUser{
+  id: string;
 }

@@ -25,7 +25,14 @@ const AddUser = () => {
     reset
   } = useForm({
     mode: 'onTouched',
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: '',
+      role: 'client',
+      status: 'open',
+      address: '',
+      amount: ''
+    }
   });
 
   const [addUser, { loading }] = useMutation(CREATE_USER_MUTATION, {
@@ -39,7 +46,6 @@ const AddUser = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    debugger
     await addUser({ variables: { ...data } });
   };
 

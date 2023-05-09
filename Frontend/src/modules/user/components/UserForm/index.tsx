@@ -1,7 +1,10 @@
-import { Control, Controller, FieldError, FieldValues, SubmitHandler, UseFormHandleSubmit } from "react-hook-form";
-import { Input, Radio } from "antd";
+import { Control, Controller, FieldError, FieldValues } from "react-hook-form";
+import { Input, Radio, Select } from "antd";
 import { FC } from "react";
 import styles from './index.module.css';
+import { Option } from "antd/es/mentions";
+import Title from "antd/es/typography/Title";
+import { IData, IUser } from "../../types";
 
 type Errors = {
   name?: FieldError | undefined;
@@ -12,7 +15,7 @@ type Errors = {
 };
 
 type FormProps = {
-  control: Control;
+  control: Control<IUser, any>;
   errors: Errors
 };
 const UserForm: FC<FormProps> = ({ control, errors}) => {
@@ -27,27 +30,29 @@ const UserForm: FC<FormProps> = ({ control, errors}) => {
       <div className={styles.errorMessage}>{errors.name ? errors.name.message : ''}</div>
     </div>
     <div className={styles.input}>
+      <Title level={5}>Role</Title>
       <Controller
         name="role"
         control={control}
         render={({ field }) =>
-          <Radio.Group defaultValue="2" {...field}>
-            <Radio value="admin">Admin</Radio>
-            <Radio value="client">Client</Radio>
-            <Radio value="business">Business</Radio>
-          </Radio.Group>}
+          <Select defaultValue="client" {...field}>
+            <Option value="admin">Admin</Option>
+            <Option value="client">Client</Option>
+            <Option value="business">Business</Option>
+          </Select>}
       />
     </div>
     <div className={styles.input}>
+      <Title level={5}>Status</Title>
       <Controller
         name="status"
         control={control}
         render={({ field }) =>
-          <Radio.Group defaultValue="2" {...field}>
-            <Radio value="open">Open</Radio>
-            <Radio value="pending">Pending</Radio>
-            <Radio value="close">Close</Radio>
-          </Radio.Group>}
+          <Select defaultValue="open" {...field}>
+            <Option value="open">Open</Option>
+            <Option value="pending">Pending</Option>
+            <Option value="close">Close</Option>
+          </Select>}
       />
       <div className={styles.errorMessage}>{errors.status ? errors.status.message : ''}</div>
     </div>

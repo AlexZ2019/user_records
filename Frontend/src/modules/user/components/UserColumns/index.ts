@@ -64,6 +64,6 @@ export const userAmount = {
   title: 'Amount',
   dataIndex: 'amount',
   key: 'amount',
-  sorter: (a: IData, b: IData) => a.amount - b.amount,
+  sorter: (a: IData, b: IData) => Number(a.amount) - Number(b.amount),
   sortDirections: ['descend', 'ascend'],
 }
