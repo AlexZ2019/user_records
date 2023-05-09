@@ -8,19 +8,14 @@ import { getColumnSearchProps } from "../../../common/utils/getColumnSearchProps
 import { IData } from "../../types";
 import { userAddress, userAmount, userName, userRole, userStatus } from "../../components/UserColumns";
 import AddUser from "../../components/AddUser";
+import DefaultPagination from "../../../common/components/DefaultPagination";
 
 type DataIndex = keyof IData;
 const Users = () => {
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
-  const [tableParams, setTableParams] = useState({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-    },
-  });
-  const { data, loading, fetchMore } = useQuery(USERS_QUERY);
+  const { data, loading, refetch } = useQuery(USERS_QUERY);
   const handleSearch = (
     selectedKeys: string[],
     confirm: (param?: FilterConfirmProps) => void,
@@ -55,7 +50,8 @@ const Users = () => {
         <Title level={3}>Users</Title>
         <AddUser/>
       </div>
-      <Table columns={columns} dataSource={data?.getUsers?.users} loading={loading} pagination={tableParams.pagination} />
+      <Table columns={columns} rowKey={user => user.id} dataSource={data?.getUsers?.users} loading={loading} pagination={false} />
+      <DefaultPagination getNewPage={refetch} total={data?.getUsers?.total}/>
     </div>
   )
 }
