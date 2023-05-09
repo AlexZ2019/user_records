@@ -6,7 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.min.css';
 import { BrowserRouter } from 'react-router-dom';
 import { ApolloProvider } from '@apollo/client';
-import { client } from './providers/apollo/config';
+import { client } from "./providers/apollo/config";
+
 
 ReactDOM.render(
   <ApolloProvider client={client}>

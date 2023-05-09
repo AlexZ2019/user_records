@@ -1,46 +1,19 @@
 import { useQuery } from "@apollo/client";
 import { USERS_QUERY } from "../../graphql/queries/getUser";
-import { Table } from "antd";
-import { ColumnsType } from "antd/es/table";
-import { useState } from "react";
+import { Button, InputRef, Table, Tooltip } from "antd";
+import { useRef, useState } from "react";
+import { PlusOutlined } from "@ant-design/icons";
+import { FilterConfirmProps } from "antd/es/table/interface";
+import Title from "antd/es/typography/Title";
+import { getColumnSearchProps } from "../../../common/utils/getColumnSearchProps";
+import { IData } from "../../types";
+import { userAddress, userAmount, userName, userRole, userStatus } from "../../components/UserColumns";
 
-const columns: ColumnsType<any> = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    width: '30%',
-  },
-  {
-    title: 'Role',
-    dataIndex: 'role',
-    key: 'role',
-    width: '20%',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-    sorter: (a, b) => a.address - b.address,
-    sortDirections: ['descend', 'ascend'],
-  },
-  {
-    title: 'Amount',
-    dataIndex: 'amount',
-    key: 'amount',
-    sorter: (a, b) => a.amount - b.amount,
-    sortDirections: ['descend', 'ascend'],
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    key: 'status',
-    sorter: (a, b) => a.status - b.status,
-    sortDirections: ['descend', 'ascend'],
-  },
-];
+type DataIndex = keyof IData;
 const Users = () => {
-
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef<InputRef>(null);
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: 1,
@@ -48,10 +21,45 @@ const Users = () => {
     },
   });
   const { data, loading, fetchMore } = useQuery(USERS_QUERY);
+  const handleSearch = (
+    selectedKeys: string[],
+    confirm: (param?: FilterConfirmProps) => void,
+    dataIndex: DataIndex,
+  ) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+
+  const handleReset = (clearFilters: () => void) => {
+    clearFilters();
+    setSearchText('');
+  };
+
+
+  const columns: any = [
+    {...userName, ...getColumnSearchProps(
+        'name', searchInput, handleSearch,
+                handleReset, setSearchText,
+                setSearchedColumn, searchedColumn, searchText)
+    },
+    userRole,
+    userStatus,
+    userAddress,
+    userAmount
+  ];
 
   return (
     <div>
-      <Table columns={columns} dataSource={data.getUsers.users} loading={loading} pagination={tableParams.pagination} />
+      <div>
+        <Title level={3}>Users</Title>
+        <Tooltip placement="topLeft" title="Add user">
+          <Button type="ghost">
+            <PlusOutlined />
+          </Button>
+        </Tooltip>
+      </div>
+      <Table columns={columns} dataSource={data?.getUsers?.users} loading={loading} pagination={tableParams.pagination} />
     </div>
   )
 }
